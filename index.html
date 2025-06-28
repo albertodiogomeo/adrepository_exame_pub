@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Azure OpenAI Chat</title>
+</head>
+<body>
+  <h2>Chat with GPT</h2>
+  <textarea id="userInput" rows="4" cols="50" placeholder="Ask something..."></textarea><br>
+  <button onclick="sendMessage()">Send</button>
+  <p><strong>Response:</strong></p>
+  <div id="responseOutput"></div>
+
+  <script>
+    async function sendMessage() {
+      const userInput = document.getElementById('userInput').value;
+      const responseOutput = document.getElementById('responseOutput');
+
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userInput })
+      });
+
+      const data = await res.json();
+      responseOutput.innerText = data.reply || "No response received.";
+    }
+  </script>
+</body>
+</html>
